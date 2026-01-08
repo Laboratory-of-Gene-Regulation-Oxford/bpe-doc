@@ -1,0 +1,219 @@
+---
+title: "CGAT Pipeline Basics"
+---
+
+## Overview
+
+CGAT pipelines provide a framework for reproducible computational biology workflows. This guide covers the basics of running CGAT pipelines.
+
+## What are CGAT Pipelines?
+
+CGAT pipelines are a collection of workflows built using the CGAT-core framework. They provide standardized, tested pipelines for common bioinformatics analyses including:
+
+- RNA-seq analysis
+- ChIP-seq analysis
+- Single-cell analysis
+- Variant calling
+- And more
+
+## Installation
+
+### Using Conda (Recommended)
+
+```bash
+# Create a new conda environment
+conda create -n cgat-pipelines python=3.9
+
+# Activate the environment
+conda activate cgat-pipelines
+
+# Install CGAT-core and pipelines
+conda install -c conda-forge -c bioconda cgatcore cgat-apps
+```
+
+## Basic Pipeline Structure
+
+CGAT pipelines follow a consistent structure:
+
+```
+project/
+├── pipeline.yml          # Configuration file
+├── pipeline_name.py      # Pipeline script
+└── data/                 # Input data directory
+```
+
+## Running a Pipeline
+
+### 1. Configure the Pipeline
+
+Each pipeline requires a configuration file (`pipeline.yml`). Generate a default configuration:
+
+```bash
+# Navigate to your project directory
+cd my_project/
+
+# Generate default configuration
+cgatflow <pipeline_name> config
+
+# This creates pipeline.yml - edit it to match your requirements
+```
+
+### 2. Check What Will Run
+
+Before executing, check what tasks will be performed:
+
+```bash
+# Show tasks without executing
+cgatflow <pipeline_name> show full
+```
+
+### 3. Execute the Pipeline
+
+```bash
+# Run the pipeline locally
+cgatflow <pipeline_name> make full -v5
+
+# Run with specific number of jobs in parallel
+cgatflow <pipeline_name> make full -v5 -p 10
+```
+
+### 4. Generate a Report
+
+After completion, generate an HTML report:
+
+```bash
+cgatflow <pipeline_name> make build_report
+```
+
+## Common Pipeline Commands
+
+### Check Pipeline Status
+
+```bash
+# Show pipeline targets
+cgatflow <pipeline_name> show full
+
+# Show task state
+cgatflow <pipeline_name> show state
+```
+
+### Running Specific Tasks
+
+```bash
+# Run only specific targets
+cgatflow <pipeline_name> make <target_name> -v5
+
+# For example, in RNA-seq pipeline:
+cgatflow readqc make full -v5
+```
+
+### Cleaning Up
+
+```bash
+# Remove generated files (be careful!)
+cgatflow <pipeline_name> clean
+```
+
+## Configuration File (pipeline.yml)
+
+The `pipeline.yml` file controls pipeline behavior. Key sections include:
+
+```yaml
+# Example pipeline.yml structure
+
+# Input/Output
+input:
+  pattern: "*.fastq.gz"
+  
+# Processing parameters
+alignment:
+  genome: "hg38"
+  aligner: "star"
+  threads: 8
+
+# Quality control
+qc:
+  min_quality: 20
+  adapter_file: "adapters.fa"
+```
+
+## Example: RNA-seq Pipeline
+
+```bash
+# 1. Set up project
+mkdir rnaseq_project && cd rnaseq_project
+mkdir data/
+
+# 2. Link or copy your FASTQ files to data/
+ln -s /path/to/fastq/*.fastq.gz data/
+
+# 3. Generate configuration
+cgatflow rnaseq config
+
+# 4. Edit pipeline.yml to set:
+#    - Reference genome
+#    - Gene annotations
+#    - Analysis parameters
+
+# 5. Check what will run
+cgatflow rnaseq show full
+
+# 6. Execute pipeline
+cgatflow rnaseq make full -v5 -p 8
+
+# 7. Generate report
+cgatflow rnaseq make build_report
+```
+
+## Running on a Cluster
+
+CGAT pipelines support cluster execution:
+
+```bash
+# Configure cluster in pipeline.yml
+cluster:
+  queue_manager: "slurm"
+  queue: "short"
+  memory_default: "4G"
+
+# Run on cluster
+cgatflow <pipeline_name> make full -v5 --cluster-queue=short
+```
+
+## Best Practices
+
+1. **Always work in a conda environment** to manage dependencies
+2. **Use version control** for your configuration files
+3. **Test on small datasets** before running full analyses
+4. **Keep logs** - use `-v5` for verbose logging
+5. **Check configuration** thoroughly before long runs
+6. **Monitor resource usage** to optimize cluster parameters
+7. **Generate reports** to document results
+
+## Troubleshooting
+
+### Pipeline Fails
+
+```bash
+# Check logs in _log directory
+ls _log/
+
+# Re-run with verbose output
+cgatflow <pipeline_name> make full -v5
+```
+
+### Dependency Issues
+
+```bash
+# Update conda environment
+conda update --all
+
+# Reinstall if needed
+conda install --force-reinstall cgatcore
+```
+
+## Further Resources
+
+- [CGAT-core documentation](https://cgat-core.readthedocs.io/)
+- [CGAT pipelines GitHub](https://github.com/cgat-developers/cgat-flow)
+- Pipeline-specific documentation in each pipeline repository

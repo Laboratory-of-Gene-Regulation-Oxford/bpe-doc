@@ -1,10 +1,49 @@
 ---
 title: "bpe-doc"
+format:
+  html:
+    css: styles.css
 ---
 
 ## Bam-Peak-Enhancer (bpe) Overview
 
 This site provides high level documentation of bpe collection of facilities to process and analyse gene regulation experiemental results.
+
+## Documentation Topics
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card}
+<a href="shell-scripts.html" class="card-link">
+<div class="card-icon">🔧</div>
+<div class="card-title">Shell Scripts Guide</div>
+<div class="card-description">Learn how to automate sequence processing workflows with shell scripts</div>
+</a>
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card}
+<a href="cgat-basics.html" class="card-link">
+<div class="card-icon">⚙️</div>
+<div class="card-title">CGAT Pipeline Basics</div>
+<div class="card-description">Learn how to run and configure CGAT computational biology pipelines</div>
+</a>
+:::
+:::
+
+::: {.g-col-12 .g-col-md-6}
+::: {.card}
+<a href="why-quarto.html" class="card-link">
+<div class="card-icon">📚</div>
+<div class="card-title">Why Quarto</div>
+<div class="card-description">Learn about the rationale for using Quarto and GitHub Pages</div>
+</a>
+:::
+:::
+
+:::
 
 # Using GitHub pages to write documentation
 

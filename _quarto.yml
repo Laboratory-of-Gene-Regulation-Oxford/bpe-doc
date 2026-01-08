@@ -8,6 +8,10 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: shell-scripts.qmd
+        text: Shell Scripts
+      - href: cgat-basics.qmd
+        text: CGAT Pipelines
       - href: why-quarto.qmd
         text: Why Quarto
 

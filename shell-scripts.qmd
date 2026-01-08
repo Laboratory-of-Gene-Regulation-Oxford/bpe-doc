@@ -1,0 +1,122 @@
+---
+title: "Using Shell Scripts for Sequence Processing"
+---
+
+## Overview
+
+This guide covers how to use shell scripts to run sequence processing programs efficiently.
+
+## Basic Shell Script Structure
+
+Shell scripts provide a way to automate sequence processing workflows. Here's a basic template:
+
+```bash
+#!/bin/bash
+# Script: process_sequences.sh
+# Description: Process sequencing data
+
+# Set error handling
+set -e  # Exit on error
+set -u  # Exit on undefined variable
+set -o pipefail  # Exit on pipe failure
+
+# Define input/output paths
+INPUT_DIR="data/raw"
+OUTPUT_DIR="data/processed"
+
+# Create output directory if it doesn't exist
+mkdir -p "$OUTPUT_DIR"
+
+echo "Starting sequence processing..."
+# Your processing commands here
+```
+
+## Running Programs in Shell Scripts
+
+### Basic Command Execution
+
+```bash
+# Run a single command
+program_name input.fastq > output.txt
+
+# Run with multiple parameters
+program_name --input input.fastq --output output.bam --threads 4
+```
+
+### Error Checking
+
+```bash
+# Check if command succeeded
+if ! program_name input.fastq > output.txt; then
+    echo "Error: Processing failed" >&2
+    exit 1
+fi
+
+# Alternative using set -e (recommended)
+set -e
+program_name input.fastq > output.txt
+```
+
+### Processing Multiple Files
+
+```bash
+# Loop through all FASTQ files
+for file in "$INPUT_DIR"/*.fastq; do
+    basename=$(basename "$file" .fastq)
+    echo "Processing $basename..."
+    program_name "$file" > "$OUTPUT_DIR/${basename}.processed.txt"
+done
+```
+
+## Best Practices
+
+1. **Always use error handling** with `set -e`
+2. **Quote variables** to handle spaces in filenames: `"$variable"`
+3. **Log output** to track progress and debug issues
+4. **Use meaningful variable names** for clarity
+5. **Comment your code** to explain complex operations
+6. **Test on small datasets** before running on full data
+
+## Example: Complete Processing Pipeline
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+# Configuration
+INPUT_DIR="data/raw"
+OUTPUT_DIR="data/processed"
+THREADS=8
+LOG_FILE="processing.log"
+
+# Create directories
+mkdir -p "$OUTPUT_DIR"
+
+# Start logging
+exec > >(tee "$LOG_FILE") 2>&1
+echo "Pipeline started: $(date)"
+
+# Process each sample
+for fastq in "$INPUT_DIR"/*.fastq.gz; do
+    sample=$(basename "$fastq" .fastq.gz)
+    echo "Processing sample: $sample"
+    
+    # Quality control
+    fastqc "$fastq" -o "$OUTPUT_DIR"
+    
+    # Alignment
+    bwa mem -t "$THREADS" reference.fa "$fastq" | \
+        samtools sort -@ "$THREADS" -o "$OUTPUT_DIR/${sample}.bam"
+    
+    # Index
+    samtools index "$OUTPUT_DIR/${sample}.bam"
+done
+
+echo "Pipeline completed: $(date)"
+```
+
+## Further Resources
+
+- [Bash scripting guide](https://www.gnu.org/software/bash/manual/)
+- Shell script best practices
+- Workflow management systems (Snakemake, Nextflow)
