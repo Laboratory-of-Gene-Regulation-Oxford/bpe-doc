@@ -7,7 +7,13 @@ title: "bpe-doc"
 This site provides high level documentation of bpe collection
 of facilities to process and analyse gene regulation experiemental results.
 
+# Using git pages to write documentation
 
+This documentation site is built using Quarto and hosted using GitHub Pages.
+
+
+Here are the steps to contribute to this documentation site:
+2. 
 #### Quarto
 
 Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
