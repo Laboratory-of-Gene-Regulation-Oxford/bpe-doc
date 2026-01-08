@@ -4,16 +4,54 @@ title: "bpe-doc"
 
 ## Bam-Peak-Enhancer (bpe) Overview
 
-This site provides high level documentation of bpe collection
-of facilities to process and analyse gene regulation experiemental results.
+This site provides high level documentation of bpe collection of facilities to process and analyse gene regulation experiemental results.
 
 # Using git pages to write documentation
 
-This documentation site is built using Quarto and hosted using GitHub Pages.
+This documentation site is built using Quarto and hosted using GitHub Pages. The rationale for using this approach is summarised in [this page](why-quarto.qmd).
+
+## How to contribute documentation
+
+### Edit in GitHub - for small changes
+
+1. **Open the repository in github.com** for this [documentation site](https://github.com/Laboratory-of-Gene-Regulation-Oxford/bpe-doc).
+1.  **Browse to the file**
+    -   `*.qmd` (or `.md`) files in your content folders.
+2.  **Click the pencil icon (“Edit this file”)**
+    -   GitHub opens an in-browser editor for that file.
+3.  **Make the change and commit**
+    -   Add a short commit message.
+    -   Either commit directly to the main branch (if allowed) or create a new branch and open a pull request.
+4.  **Approval of change and deployment**
+    -   Your changes may need approval, which case a pull request will be set up and once approved the site will be automatically rebuilt.
+
+### Edit locally - for larger changes
+
+#### One-time setup
+
+1. **Clone the repository to your local machine**
+    -   `git clone https://github.com/Laboratory-of-Gene-Regulation-Oxford/bpe-doc.git`
+   or clone using vs code git extension. 
+2. **Set up your local environment**
+    -   Follow any setup instructions specific to this repository.
+
+#### Making changes
+
+1. **Open the repository in your local editor**
+    -   Open the folder you cloned in your code editor (e.g., VS Code, RStudio).
+2. **Edit the files**
+    -   Make changes to the `*.qmd` (or `.md`) files as needed.
+3. **Preview your changes**
+    -   Use Quarto's preview features to see how your changes will look.
+4. **Commit and push your changes**
+    -   Use git to commit your changes with a descriptive message.
+    -   Push your changes to your fork or branch on GitHub.
+5. **Create a pull request**
+    -   Open a pull request on GitHub to propose your changes for review.
+6. **Approval of change and deployment**
+    -   Once your pull request is approved, the site will be automatically rebuilt and your changes will go live.
 
 
-Here are the steps to contribute to this documentation site:
-2. 
 #### Quarto
 
 Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
