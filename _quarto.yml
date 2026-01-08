@@ -1,5 +1,15 @@
 project:
+  type: website
   title: "bpe-doc"
+  
+website:
+  title: "Bam-Peak-Enhancer Documentation"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: why-quarto.qmd
+        text: Why Quarto
 
 
 
